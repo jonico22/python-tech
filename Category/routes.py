@@ -52,7 +52,7 @@ def create_category():
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
 @set_Category
-def update_rol(category):
+def update_category(category):
     json = request.get_json(force=True)
     category.name = json.get('name', category.name)
     if category.save():
