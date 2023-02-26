@@ -24,7 +24,10 @@ def set_User(function):
 
 #INICIAR GET
 @bp.route('/', methods=['GET'])
+@bp.arguments(users_schema)
+@bp.response(200, users_schema)
 def get_Users():
+   
     page = int(request.args.get('page', 1))
     order = request.args.get('order', 'desc')
     Users = User.get_by_page(order, page)
@@ -32,12 +35,14 @@ def get_Users():
 
 #INICIAR DETALLE ID
 @bp.route('/<id>', methods=['GET'])
+@bp.arguments(users_schema)
 @set_User
 def get_User(user):
     return response(user_schema.dump(user))
 
 #INICIAR GUARDAR
 @bp.route('/', methods=['POST'])
+@bp.arguments(users_schema)
 def create_User():
     json = request.get_json(force=True)
     error = params_users_schema.validate(json)
@@ -49,7 +54,7 @@ def create_User():
         return validate_auth('El email ya está siendo utilizado por otro usuario')
     username = User.get_by_username(json['username'])
     if username is not None:
-        return validate_auth('El username  ya está siendo utilizado por otro usuario')
+        return validate_auth('El username ya está siendo utilizado por otro usuario')
     
     user = User.new(json['username'], json['email'], json['password'], json['rol_id'])
     user.set_password(json['password'])
@@ -60,6 +65,7 @@ def create_User():
 
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
+@bp.arguments(users_schema)
 @set_User
 def update_User(user):
     json = request.get_json(force=True)
@@ -74,6 +80,7 @@ def update_User(user):
 
 #INICIAR ELIMINAR
 @bp.route('/<id>', methods=['DELETE'])
+@bp.arguments(user_schema)
 @set_User
 def delete_User(user):
     if user.delete():
