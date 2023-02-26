@@ -31,3 +31,29 @@ desde ahi puedes comenzar instalar las librerias que necesita tu proyecto
 si deseas guardar tus librerias que utilizas en archivo txt solo debes presionar el siguiente comando
 
 `pip freeze > requirements.txt`
+
+Los ambientes de desarrollo son :
+
+main -> rama principal
+
+develop -> rama de desarrollo
+
+test -> rama de pruebas
+
+Para iniciar el proyecto se debe utilizar variables de entorno por ejemplo :
+
+export DATABASE_URI="postgresql://username:password@host:port/database_name"
+
+# migrate
+
+si no se realizado este paso con anteriodad
+
+flask db init
+
+luego 
+
+flask db migrate
+
+actualizar
+
+flask db upgrade
