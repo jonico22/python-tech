@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 # after a transaction has been committed
 # ! be aware that the above can have unintended side effects
 db = SQLAlchemy()
-
+from sqlalchemy.schema import ForeignKey
 from sqlalchemy import desc, asc
 from sqlalchemy.event import listen
 
@@ -16,7 +16,11 @@ class Rol(db.Model):
     name = db.Column(db.String(), nullable=False)
     created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
     status =  db.Column(db.Boolean, nullable=False,default=1)
-
+    user = db.relationship(
+        "User",
+        backref="roles",
+        cascade="delete,merge"
+    )
     @classmethod
     def new(cls, name):
         return Rol(name=name)
@@ -49,3 +53,39 @@ def insert_roles(*args, **kwargs):
     db.session.commit()
 
 listen(Rol.__table__, 'after_create', insert_roles)
+
+class User(db.Model):
+    __tablename__ = 'users'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True,unique=True)
+    username = db.Column(db.String(), nullable=False,unique=True)
+    email = db.Column(db.String(), nullable=False,unique=True)
+    password = db.Column(db.String(), nullable=False)
+    rol_id = db.Column(db.Integer,ForeignKey("roles.id",ondelete="CASCADE"))
+    created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
+    status =  db.Column(db.Boolean, nullable=False,default=1)
+
+    @classmethod
+    def new(cls, username,email,password,rol_id):
+        return User(username=username,email=email,password=password,rol_id=rol_id)
+
+    @classmethod
+    def get_by_page(cls, order, page, per_page=10):
+        sort = desc(User.id) if order == 'desc' else asc(User.id)
+        return User.query.order_by(sort).paginate(page=page, per_page=per_page).items
+
+    def save(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return True
+        except:
+            return False
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False

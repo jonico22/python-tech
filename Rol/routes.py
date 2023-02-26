@@ -39,8 +39,6 @@ def get_rol(rol):
 @bp.route('/', methods=['POST'])
 def create_rol():
     json = request.get_json(force=True)
-    print(json)
-    print(json['name'])
     error = params_roles_schema.validate(json)
     if error:
         print(error)

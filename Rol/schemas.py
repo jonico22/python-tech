@@ -4,7 +4,7 @@ from marshmallow.validate import Length
 
 class RolSchema(Schema):
     class Meta:
-        fields = ('id', 'name')
+        fields = ('id', 'name','status')
 
 class ParamsRolSchema(Schema):
     name = fields.Str(required=True, validate=Length(max=100))
