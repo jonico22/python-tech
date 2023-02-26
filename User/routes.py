@@ -5,6 +5,7 @@ from models import User
 from util import response
 from util import not_found
 from util import bad_request
+from util import validate_auth
 
 from .schemas import user_schema
 from .schemas import users_schema
@@ -43,7 +44,15 @@ def create_User():
     if error:
         print(error)
         return bad_request()
+    email = User.get_by_email(json['email'])
+    if email is not None:
+        return validate_auth('El email ya está siendo utilizado por otro usuario')
+    username = User.get_by_username(json['username'])
+    if username is not None:
+        return validate_auth('El username  ya está siendo utilizado por otro usuario')
+    
     user = User.new(json['username'], json['email'], json['password'], json['rol_id'])
+    user.set_password(json['password'])
     if user.save():
         return response(user_schema.dump(user))
     

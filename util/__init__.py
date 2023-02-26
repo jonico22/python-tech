@@ -8,6 +8,14 @@ def bad_request():
     'code': 400
   }), 400
 
+def validate_auth(msg):
+  return jsonify({
+    'success': False,
+    'data': {},
+    'messages': msg,
+    'code': 400
+  }), 400
+
 def not_found():
   return jsonify(
     {

@@ -8,6 +8,7 @@ db = SQLAlchemy()
 from sqlalchemy.schema import ForeignKey
 from sqlalchemy import desc, asc
 from sqlalchemy.event import listen
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class Rol(db.Model):
     __tablename__ = 'roles'
@@ -65,6 +66,20 @@ class User(db.Model):
     created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
     status =  db.Column(db.Boolean, nullable=False,default=1)
 
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
+
+    @staticmethod
+    def get_by_email(email):
+        return User.query.filter_by(email=email).first()
+    
+    @staticmethod
+    def get_by_username(username):
+        return User.query.filter_by(username=username).first()
+    
     @classmethod
     def new(cls, username,email,password,rol_id):
         return User(username=username,email=email,password=password,rol_id=rol_id)
