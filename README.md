@@ -58,3 +58,13 @@ crear tablas
 
 flask db upgrade
 
+# iniciar el proyecto
+
+pip3 install -r requirements.txt
+
+sigo los pasos del migrate
+
+despues inicie el servidor
+
+python3 app.py
+
