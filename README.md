@@ -46,14 +46,15 @@ export DATABASE_URI="postgresql://username:password@host:port/database_name"
 
 # migrate
 
-si no se realizado este paso con anteriodad
+configurar la carpeta
 
 flask db init
 
-luego 
+iniciar migraciones
 
 flask db migrate
 
-actualizar
+crear tablas
 
 flask db upgrade
+
