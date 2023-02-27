@@ -34,7 +34,7 @@ def logoutUser():
     return {"message": "Successfully logged out"}, 200
 
 @bp.route('/refresh', methods=['POST'])
-@jwt_required()
+@jwt_required(refresh=True)
 def refreshUser():
     current_user = get_jwt_identity()
     new_token = create_access_token(identity=current_user, fresh=False)
