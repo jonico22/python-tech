@@ -68,3 +68,12 @@ despues inicie el servidor
 
 python3 app.py
 
+documentacion
+
+https://pypi.org/project/flask-smorest/
+
+token
+
+la libreria que se usa es 
+
+flask_jwt_extended
