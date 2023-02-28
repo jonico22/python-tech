@@ -316,3 +316,11 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/flask,windows,macos,python
+
+/migrations
+migrations/
+
+rol/__pycache__/
+models/__pycache__/
+util/__pycache__/
+category/__pycache__/

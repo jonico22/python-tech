@@ -31,3 +31,49 @@ desde ahi puedes comenzar instalar las librerias que necesita tu proyecto
 si deseas guardar tus librerias que utilizas en archivo txt solo debes presionar el siguiente comando
 
 `pip freeze > requirements.txt`
+
+Los ambientes de desarrollo son :
+
+main -> rama principal
+
+develop -> rama de desarrollo
+
+test -> rama de pruebas
+
+Para iniciar el proyecto se debe utilizar variables de entorno por ejemplo :
+
+export DATABASE_URI="postgresql://username:password@host:port/database_name"
+
+# migrate
+
+configurar la carpeta
+
+flask db init
+
+iniciar migraciones
+
+flask db migrate
+
+crear tablas
+
+flask db upgrade
+
+# iniciar el proyecto
+
+pip3 install -r requirements.txt
+
+sigo los pasos del migrate
+
+despues inicie el servidor
+
+python3 app.py
+
+documentacion
+
+https://pypi.org/project/flask-smorest/
+
+token
+
+la libreria que se usa es 
+
+flask_jwt_extended
