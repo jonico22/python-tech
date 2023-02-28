@@ -19,11 +19,11 @@ def loginUser():
     user = User.query.filter(
             User.email == json['email']
         ).first()
+    
     if user and check_password_hash(user.password, json['password']):    
         access_token = create_access_token(identity=user.id, fresh=True)
         refresh_token = create_refresh_token(user.id)
         return {"access_token": access_token, "refresh_token": refresh_token}, 200
-
     abort(401, message="Invalid credentials.")
 
 @bp.route('/logout', methods=['POST'])
