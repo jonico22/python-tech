@@ -70,6 +70,11 @@ class User(db.Model):
         backref="users",
         cascade="delete,merge"
     )
+    recommendation = db.relationship(
+            "Recommendation",
+            backref="users",
+            cascade="delete,merge"
+    ) 
 
     def set_password(self, password):
         self.password = generate_password_hash(password,method="sha256")
@@ -117,6 +122,11 @@ class Category(db.Model):
     name = db.Column(db.String(), nullable=False,unique=True)
     created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
     status =  db.Column(db.Boolean, nullable=False,default=1)
+    recommendation = db.relationship(
+            "Recommendation",
+            backref="categorias",
+            cascade="delete,merge"
+    )  
     
     @classmethod
     def new(cls, name):
@@ -196,6 +206,12 @@ class Event(db.Model):
     country_id = db.Column(db.Integer,ForeignKey("paises.id",ondelete="CASCADE"))
     created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
     status =  db.Column(db.Boolean, nullable=False,default=1)
+    recommendation = db.relationship(
+            "Recommendation",
+            backref="eventos",
+            cascade="delete,merge"
+    ) 
+    
     
     @classmethod
     def new(cls, title, address, description, date_event, image, url, user_id, country_id):
@@ -221,3 +237,40 @@ class Event(db.Model):
             return True
         except:
             return False                            
+
+class Recommendation(db.Model):
+    __tablename__ = 'recomendaciones'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True,unique=True)
+    title = db.Column(db.String(), nullable=False,unique=True)
+    description = db.Column(db.String(), nullable=False)
+    user_id = db.Column(db.Integer,ForeignKey("users.id",ondelete="CASCADE"))
+    event_id = db.Column(db.Integer,ForeignKey("eventos.id",ondelete="CASCADE"))
+    category_id = db.Column(db.Integer,ForeignKey("categorias.id",ondelete="CASCADE"))
+    created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
+    status =  db.Column(db.Boolean, nullable=False,default=1)
+    
+    @classmethod
+    def new(cls, title, description, user_id, event_id, category_id):
+        return Recommendation(title=title, description=description, user_id=user_id, event_id=event_id, category_id=category_id)
+
+    @classmethod
+    def get_by_page(cls, order, page, per_page=10):
+        sort = desc(Recommendation.id) if order == 'desc' else asc(Recommendation.id)
+        return Recommendation.query.order_by(sort).paginate(page=page, per_page=per_page).items
+
+    def save(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            return True
+        except:
+            return False
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+            return True
+        except:
+            return False              

@@ -5,6 +5,7 @@ from User import bp as user_routes
 from Category import bp as category_routes
 from Country import bp as country_routes
 from Event import bp as event_routes
+from Recommendation import bp as recommendation_routes
 from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 from blocklist import BLOCKLIST
@@ -33,6 +34,7 @@ def create_app():
     api.register_blueprint(category_routes, url_prefix='/api/v1/categorias')
     api.register_blueprint(country_routes, url_prefix='/api/v1/paises')
     api.register_blueprint(event_routes, url_prefix='/api/v1/eventos')
+    api.register_blueprint(recommendation_routes, url_prefix='/api/v1/recomendaciones')
     api.register_blueprint(auth_routes, url_prefix='/api/v1/auth')
 
     @jwt.token_in_blocklist_loader
