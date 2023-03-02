@@ -77,3 +77,13 @@ token
 la libreria que se usa es 
 
 flask_jwt_extended
+
+# deploy
+
+se utiliza la version 1 pk la version 3 no es compatible con version posteriores de python 3.8
+
+de tal motivo se tuvo que hacer unas modificaciones en el archivo fabfile para que funcione correctamente
+
+en este caso utilizamos el servidor en aws con llave pem
+
+fab -i <key> deploy -H <servidor>

@@ -12,9 +12,11 @@ def deploy(c:  Connection):
                 print('>>> actualizar los paquetes')
                 c.run('pip3 install -r requirements.txt')
                 print('>>> actualizar las tablas si es que hubiera un cambio')
+                c.run('flask db migrate')
                 c.run('flask db upgrade')
     print('>>> resetear el servicio creado')
     c.sudo('systemctl restart flaskapp')
     print('>>> resetear el servidor')
     c.sudo('systemctl restart nginx')
     print('>>> deploy terminado')
+
