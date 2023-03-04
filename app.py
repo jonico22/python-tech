@@ -1,7 +1,7 @@
 from flask_migrate import Migrate
 
 from init import create_app
-from models import db, Rol
+from models import db
 
 app = create_app()
 # bootstrap database migrate commands

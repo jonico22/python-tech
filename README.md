@@ -1,79 +1,120 @@
-# python-tech
+# NOMBRE DEL PROYECTO: PYTHON TECH
 
-utilizamos la herramienta online gitignore.io , terminos usados son
 
-flask,windows,macos,python
+## DESARROLLADORES
 
-Prueba realizada en entorno de windows con wsl2 - ubuntu
+Claudia González Fuentes
+Jose Luis Yana Nicolas
 
-ingresar al entorno de ubuntu y actualizar la distribucion 
+# PASOS PREVIOS PARA EL ENTORNO DE TRABAJO
+
+Si utiliza un entorno de windows con wsl2 o linux es recomendable actualizar los paquetes y seguir los siguientes pasos:
 
 `sudo apt update`
 
-verificar la version de python en este caso entorno wsl2 lo tiene con el nombre python3
+Se recomienda verificar la version de python :
 
 `python3 --version`
 
-tener instalado el instalador de paquetes pip
+Si no tiene PIP (instalador de paquete) es necesario instalarlo :
 
 `sudo apt install python3-pip`
 
-crear la carpeta de tu proyecto y luego crear el entorno virtual 
+## PREPARACION DE LA BASE DE DATOS (postgres)
+
+Lo pasos para windows con wsl se recomiendo tener en cuenta este tutorial de microsoft
+
+https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database
+
+Luego de tener instalado la bd seguir los siguientes pasos :
+
+Inicio sesion de Postgres con el siguiente comando:
+
+`sudo -iu postgres psql`
+
+Luego crea una base de datos para tu proyecto:
+
+`CREATE DATABASE tech_db_dev;`
+
+A continuación se debe crear un usuario de base de datos para nuestro proyecto:
+
+`CREATE USER userdb WITH PASSWORD 'userdb'`
+
+Luego dé a este nuevo acceso de usuario para administrar su nueva base de datos:
+
+`GRANT ALL PRIVILEGES ON DATABASE tech_db_dev TO userdb;`
+
+Para confirmar que se creó la base de datos :
+
+`\l`
+
+Para salir del Postgres :
+
+`\q`
+
+## INSTALACIÓN DEL PROYECTO
+
+Clonar el repositorio , Dirigirte a la carpeta del repositorio
+
+`git@github.com:jonico22/python-tech.git`
+
+Luego iniciar el entorno
 
 `python3 -m venv venv`
 
-luego activamos el entorno virtual
+Luego activamos el entorno virtual
 
 `source venv/bin/activate`
 
-desde ahi puedes comenzar instalar las librerias que necesita tu proyecto
+Despues comenzamos a  instalar las librerias que necesita :
 
-si deseas guardar tus librerias que utilizas en archivo txt solo debes presionar el siguiente comando
-
-`pip freeze > requirements.txt`
-
-Los ambientes de desarrollo son :
-
-main -> rama principal
-
-develop -> rama de desarrollo
-
-test -> rama de pruebas
+`pip3 install -r requirements.txt`
 
 Para iniciar el proyecto se debe utilizar variables de entorno por ejemplo :
 
-export DATABASE_URI="postgresql://username:password@host:port/database_name"
+export DATABASE_URI="postgresql://userdb:userdb@host:port/tech_db_dev"
 
-# migrate
+### INICIAR CON LA MIGRACION
 
-configurar la carpeta
+En la misma carpeta del proyecto iniciar con el siguiente comando :
 
-flask db init
+`flask db init`
 
-iniciar migraciones
+Luego iniciar la migraciones :
 
-flask db migrate
+`flask db migrate`
 
-crear tablas
+Actualizar las tablas :
 
-flask db upgrade
+`flask db upgrade`
 
-# iniciar el proyecto
+Crear los registros(solamente una vez) con el siguiente comando :
 
-pip3 install -r requirements.txt
+`python3 init_db.py`
 
-sigo los pasos del migrate
+# INICIA EL PROYECTO
 
-despues inicie el servidor
+Despues de seguir los pasos previos , debe iniciar el servidor con el siguiente comando:
 
-python3 app.py
+ `python3 app.py`
 
-documentacion
+# TAREA PROGRAMADA
 
-https://pypi.org/project/flask-smorest/
+Para crear un tarea programada en este proyecto estamos utilizando fabric 3 y tambien estamos desplegando un servidor en AWS EC2 con una capa gratiuta y utilizamos el siguiente comando
 
-token
+`fab -i <key> deploy -H <servidor>`
 
-la libreria que se usa es 
+# HERRAMIENTA Y LIBRERIAS UTILIZADAS 
 
-flask_jwt_extended
+Utilizamos la herramienta online gitignore.io para generar la configuracion de gitignore del proyecto , terminos usados son los siguientes:
+
+flask,windows,macos,python
+
+Esta son las librerias mas importantes :
+
+```
+Flask==2.2.3 -> la version mas actualizada
+Flask-JWT-Extended==4.4.4 -> nos ayuda en la implementacion de seguridad para la aplicacion con tokens
+Flask-Migrate==4.0.4 -> nos facilita la actualizacion de tablas
+flask-smorest==0.40.0 -> nos ayuda para mejor implementacion de ruta y para la documentacion del proyecto
+Flask-SQLAlchemy==3.0.3 -> ORM de la aplicacion
