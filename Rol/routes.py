@@ -9,7 +9,7 @@ from util import bad_request
 from .schemas import rol_schema
 from .schemas import roles_schema
 from .schemas import params_roles_schema
-
+from flask_jwt_extended import jwt_required
 
 def set_Rol(function):
     def wrap(*args, **kwargs):
@@ -23,6 +23,7 @@ def set_Rol(function):
 
 #INICIAR GET
 @bp.route('/', methods=['GET'])
+@jwt_required()
 def get_Rols():
     page = int(request.args.get('page', 1))
     order = request.args.get('order', 'desc')
@@ -31,12 +32,14 @@ def get_Rols():
 
 #INICIAR DETALLE ID
 @bp.route('/<id>', methods=['GET'])
+@jwt_required()
 @set_Rol
 def get_rol(rol):
     return response(rol_schema.dump(rol))
 
 #INICIAR GUARDAR
 @bp.route('/', methods=['POST'])
+@jwt_required()
 def create_rol():
     json = request.get_json(force=True)
     error = params_roles_schema.validate(json)
@@ -51,6 +54,7 @@ def create_rol():
 
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
+@jwt_required()
 @set_Rol
 def update_rol(rol):
     json = request.get_json(force=True)
@@ -62,6 +66,7 @@ def update_rol(rol):
 
 #INICIAR ELIMINAR
 @bp.route('/<id>', methods=['DELETE'])
+@jwt_required()
 @set_Rol
 def delete_rol(rol):
     if rol.delete():

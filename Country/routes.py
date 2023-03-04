@@ -9,7 +9,7 @@ from util import bad_request
 from .schemas import country_schema
 from .schemas import countries_schema
 from .schemas import params_countries_schema
-
+from flask_jwt_extended import jwt_required
 
 def set_Country(function):
     def wrap(*args, **kwargs):
@@ -37,6 +37,7 @@ def get_country(country):
 
 #INICIAR GUARDAR
 @bp.route('/', methods=['POST'])
+@jwt_required()
 def create_country():
     json = request.get_json(force=True)
     error = params_countries_schema.validate(json)
@@ -51,6 +52,7 @@ def create_country():
 
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
+@jwt_required()
 @set_Country
 def update_country(country):
     json = request.get_json(force=True)
@@ -63,6 +65,7 @@ def update_country(country):
 
 #INICIAR ELIMINAR
 @bp.route('/<id>', methods=['DELETE'])
+@jwt_required()
 @set_Country
 def delete_country(country):
     if country.delete():

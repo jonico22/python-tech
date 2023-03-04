@@ -10,7 +10,7 @@ from util import validate_auth
 from .schemas import event_schema
 from .schemas import events_schema
 from .schemas import params_events_schema
-
+from flask_jwt_extended import jwt_required
 
 def set_Event(function):
     def wrap(*args, **kwargs):
@@ -38,6 +38,7 @@ def get_Event(event):
 
 #INICIAR GUARDAR
 @bp.route('/', methods=['POST'])
+@jwt_required()
 def create_event():
     json = request.get_json(force=True)
     error = params_events_schema.validate(json)
@@ -52,6 +53,7 @@ def create_event():
 
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
+@jwt_required()
 @set_Event
 def update_Event(event):
     json = request.get_json(force=True)
@@ -70,6 +72,7 @@ def update_Event(event):
 
 #INICIAR ELIMINAR
 @bp.route('/<id>', methods=['DELETE'])
+@jwt_required()
 @set_Event
 def delete_Event(event):
     if event.delete():

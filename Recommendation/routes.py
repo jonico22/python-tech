@@ -10,7 +10,7 @@ from util import validate_auth
 from .schemas import recommendation_schema
 from .schemas import recommendations_schema
 from .schemas import params_recommendations_schema
-
+from flask_jwt_extended import jwt_required
 
 def set_Recommendation(function):
     def wrap(*args, **kwargs):
@@ -38,6 +38,7 @@ def get_Recommendation(recommendation):
 
 #INICIAR GUARDAR
 @bp.route('/', methods=['POST'])
+@jwt_required()
 def create_recommendation():
     json = request.get_json(force=True)
     error = params_recommendations_schema.validate(json)
@@ -52,6 +53,7 @@ def create_recommendation():
 
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
+@jwt_required()
 @set_Recommendation
 def update_Recommendation(recommendation):
     json = request.get_json(force=True)
@@ -67,6 +69,7 @@ def update_Recommendation(recommendation):
 
 #INICIAR ELIMINAR
 @bp.route('/<id>', methods=['DELETE'])
+@jwt_required()
 @set_Recommendation
 def delete_Recommendation(recommendation):
     if recommendation.delete():
