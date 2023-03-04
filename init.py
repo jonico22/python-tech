@@ -10,6 +10,7 @@ from flask_smorest import Api
 from flask_jwt_extended import JWTManager
 from blocklist import BLOCKLIST
 from auth import bp as auth_routes
+from flask_cors import CORS
 
 def create_app():
     # creates an application that is named after the name of the file
@@ -27,15 +28,8 @@ def create_app():
 
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    CORS(app)
     api = Api(app)
-
-    api.register_blueprint(rol_routes, url_prefix='/api/v1/roles')
-    api.register_blueprint(user_routes, url_prefix='/api/v1/user')
-    api.register_blueprint(category_routes, url_prefix='/api/v1/categorias')
-    api.register_blueprint(country_routes, url_prefix='/api/v1/paises')
-    api.register_blueprint(event_routes, url_prefix='/api/v1/eventos')
-    api.register_blueprint(recommendation_routes, url_prefix='/api/v1/recomendaciones')
-    api.register_blueprint(auth_routes, url_prefix='/api/v1/auth')
 
     @jwt.token_in_blocklist_loader
     def check_if_token_in_blocklist(jwt_header, jwt_payload):
@@ -90,6 +84,7 @@ def create_app():
             401,
         )
 
+
     @app.errorhandler(404)
     def not_found(error):
         app.logger.info(
@@ -98,7 +93,15 @@ def create_app():
         return jsonify({
             "msg": "ruta no permitida",
             "success": False,
-            "data": None
+            "data": []
         }), 404
-
+    
+    api.register_blueprint(rol_routes, url_prefix='/api/v1/roles')
+    api.register_blueprint(user_routes, url_prefix='/api/v1/user')
+    api.register_blueprint(category_routes, url_prefix='/api/v1/categorias')
+    api.register_blueprint(country_routes, url_prefix='/api/v1/paises')
+    api.register_blueprint(event_routes, url_prefix='/api/v1/eventos')
+    api.register_blueprint(recommendation_routes, url_prefix='/api/v1/recomendaciones')
+    api.register_blueprint(auth_routes, url_prefix='/api/v1/auth')
+    
     return app
