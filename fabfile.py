@@ -20,3 +20,4 @@ def deploy(c:  Connection):
     c.sudo('systemctl restart nginx')
     print('>>> deploy terminado')
 
+

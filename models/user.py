@@ -11,8 +11,8 @@ class User(db.Model):
     email = db.Column(db.String(), nullable=False,unique=True)
     password = db.Column(db.String(), nullable=False)
     rol_id = db.Column(db.Integer,ForeignKey("roles.id",ondelete="CASCADE"))
-    created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
-    status =  db.Column(db.Boolean, nullable=False,default=1)
+    created_at = db.Column(db.DateTime(), nullable=True,default=db.func.current_timestamp())
+    status =  db.Column(db.Boolean, nullable=True,default=1)
     event = db.relationship(
         "Event",
         backref="users",
@@ -46,6 +46,7 @@ class User(db.Model):
     def get_by_page(cls, order, page, per_page=10):
         sort = desc(User.id) if order == 'desc' else asc(User.id)
         return User.query.order_by(sort).paginate(page=page, per_page=per_page).items
+
 
     def save(self):
         try:
