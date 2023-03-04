@@ -3,25 +3,25 @@ from flask import jsonify
 def bad_request():
   return jsonify({
     'success': False,
-    'data': {},
-    'messages': 'Bad request',
+    'data': [],
+    'messages': 'Petición incorrecta',
     'code': 400
   }), 400
 
 def validate_auth(msg):
   return jsonify({
     'success': False,
-    'data': {},
+    'data': [],
     'messages': msg,
-    'code': 400
-  }), 400
+    'code': 401
+  }), 401
 
 def not_found():
   return jsonify(
     {
       'success': False,
-      'data': {},
-      'message': 'Resource not found',
+      'data': [],
+      'message': 'Ruta no encontrada',
       'code': 404
     }
   ), 404
@@ -30,6 +30,8 @@ def response(data):
     return jsonify(
       {
         'success': True,
-        'data': data
+        'data': data,
+        'message': '',
+        'code': 200
       }  
     ), 200

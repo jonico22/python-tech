@@ -26,6 +26,7 @@ def loginUser():
         return {"access_token": access_token, "refresh_token": refresh_token}, 200
     abort(401, message="Invalid credentials.")
 
+# Endpoint for revoking the current users access token. Save the JWTs unique
 @bp.route('/logout', methods=['POST'])
 @jwt_required()
 def logoutUser():
