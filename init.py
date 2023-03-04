@@ -15,6 +15,8 @@ from datetime import timedelta
 
 from util import validate_auth
 from util import not_found
+from dotenv import load_dotenv
+load_dotenv()
 
 def create_app():
     # creates an application that is named after the name of the file
@@ -25,10 +27,10 @@ def create_app():
     app.config["OPENAPI_URL_PREFIX"] = "/"
     app.config["OPENAPI_SWAGGER_UI_PATH"] = "/swagger-ui"
     app.config["OPENAPI_SWAGGER_UI_URL"] = "https://cdn.jsdelivr.net/npm/swagger-ui-dist/"
-    app.config["JWT_SECRET_KEY"] = "tech"
+    app.config["JWT_SECRET_KEY"] = os.getenv('API_SECRET')
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
     app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(hours=2)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URI')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     jwt = JWTManager(app)
     CORS(app)

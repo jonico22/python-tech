@@ -85,9 +85,9 @@ Despues comenzamos a  instalar las librerias que necesita :
 
 `pip3 install -r requirements.txt`
 
-Para iniciar el proyecto se debe utilizar variables de entorno por ejemplo :
+Para iniciar el proyecto se debe crear un archivo .env con las  variables de entorno : 
 
-export DATABASE_URI="postgresql://userdb:userdb@host:port/tech_db_dev"
+`cp .env.example .env`
 
 ### INICIAR CON LA MIGRACION
 
@@ -134,3 +134,4 @@ Flask-Migrate==4.0.4 -> nos facilita la actualizacion de tablas
 flask-smorest==0.40.0 -> nos ayuda para mejor implementacion de ruta y para la documentacion del proyecto
 Flask-SQLAlchemy==3.0.3 -> ORM de la aplicacion
 flask-cors -> Nos facilita Cors para las rutas
+load_dotenv-> Obtener las variables de entorno se basa al modelo de NODE.js

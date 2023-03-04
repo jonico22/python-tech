@@ -22,3 +22,4 @@ webargs==8.2.0
 Werkzeug==2.2.3
 fabric
 flask-cors
+load_dotenv
