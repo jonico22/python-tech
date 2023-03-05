@@ -53,7 +53,7 @@ Luego crea una base de datos para tu proyecto:
 
 A continuación se debe crear un usuario de base de datos para nuestro proyecto:
 
-`CREATE USER userdb WITH PASSWORD 'userdb'`
+`CREATE USER userdb WITH PASSWORD 'userdb';`
 
 Luego dé a este nuevo acceso de usuario para administrar su nueva base de datos:
 
@@ -85,7 +85,7 @@ Despues comenzamos a  instalar las librerias que necesita :
 
 `pip3 install -r requirements.txt`
 
-Para iniciar el proyecto se debe crear un archivo .env con las  variables de entorno : 
+Para iniciar el proyecto se debe crear un archivo .env con las variables de entorno segun el ejemplo: 
 
 `cp .env.example .env`
 
