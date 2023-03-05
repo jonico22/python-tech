@@ -1,12 +1,13 @@
 import os
+from dotenv import load_dotenv
 import psycopg2
 from werkzeug.security import generate_password_hash
-
+load_dotenv()
 conn = psycopg2.connect(
         host="localhost",
-        database="tech_db_dev",
-        user='userdb',
-        password='userdb')
+        database= os.getenv('DB_NAME'),
+        user= os.getenv('DB_USER'),
+        password=os.getenv('DB_PASS') )
 
 # Open a cursor to perform database operations
 cur = conn.cursor()

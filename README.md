@@ -1,10 +1,25 @@
 # NOMBRE DEL PROYECTO: PYTHON TECH
 
+## PRODUCCION
+
+Se configuro un servidor en aws ec2 con las limitaciones de la capa gratuita.
+
+La url del proyecto :
+
+http://18.234.130.162/
+
+La documentación se encuentra en la siguiente url :
+
+http://18.234.130.162/swagger-ui
+
+*este servidor es temporal hasta la evaluacion de la practica.
 
 ## DESARROLLADORES
 
 Claudia González Fuentes
+
 Jose Luis Yana Nicolas
+
 
 # PASOS PREVIOS PARA EL ENTORNO DE TRABAJO
 
@@ -38,7 +53,7 @@ Luego crea una base de datos para tu proyecto:
 
 A continuación se debe crear un usuario de base de datos para nuestro proyecto:
 
-`CREATE USER userdb WITH PASSWORD 'userdb'`
+`CREATE USER userdb WITH PASSWORD 'userdb';`
 
 Luego dé a este nuevo acceso de usuario para administrar su nueva base de datos:
 
@@ -70,9 +85,9 @@ Despues comenzamos a  instalar las librerias que necesita :
 
 `pip3 install -r requirements.txt`
 
-Para iniciar el proyecto se debe utilizar variables de entorno por ejemplo :
+Para iniciar el proyecto se debe crear un archivo .env con las variables de entorno segun el ejemplo: 
 
-export DATABASE_URI="postgresql://userdb:userdb@host:port/tech_db_dev"
+`cp .env.example .env`
 
 ### INICIAR CON LA MIGRACION
 
@@ -118,3 +133,5 @@ Flask-JWT-Extended==4.4.4 -> nos ayuda en la implementacion de seguridad para la
 Flask-Migrate==4.0.4 -> nos facilita la actualizacion de tablas
 flask-smorest==0.40.0 -> nos ayuda para mejor implementacion de ruta y para la documentacion del proyecto
 Flask-SQLAlchemy==3.0.3 -> ORM de la aplicacion
+flask-cors -> Nos facilita Cors para las rutas
+load_dotenv-> Obtener las variables de entorno se basa al modelo de NODE.js

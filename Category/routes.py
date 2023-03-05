@@ -10,6 +10,7 @@ from .schemas import category_schema
 from .schemas import categories_schema
 from .schemas import params_categories_schema
 
+from flask_jwt_extended import jwt_required
 
 def set_Category(function):
     def wrap(*args, **kwargs):
@@ -37,6 +38,7 @@ def get_category(category):
 
 #INICIAR GUARDAR
 @bp.route('/', methods=['POST'])
+@jwt_required()
 def create_category():
     json = request.get_json(force=True)
     error = params_categories_schema.validate(json)
@@ -51,6 +53,7 @@ def create_category():
 
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
+@jwt_required()
 @set_Category
 def update_category(category):
     json = request.get_json(force=True)
@@ -62,6 +65,7 @@ def update_category(category):
 
 #INICIAR ELIMINAR
 @bp.route('/<id>', methods=['DELETE'])
+@jwt_required()
 @set_Category
 def delete_category(category):
     if category.delete():

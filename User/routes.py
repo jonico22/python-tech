@@ -10,7 +10,7 @@ from util import validate_auth
 from .schemas import user_schema
 from .schemas import users_schema
 from .schemas import params_users_schema
-
+from flask_jwt_extended import jwt_required
 
 def set_User(function):
     def wrap(*args, **kwargs):
@@ -24,6 +24,7 @@ def set_User(function):
 
 #INICIAR GET
 @bp.route('/', methods=['GET'])
+@jwt_required()
 @bp.response(200, users_schema)
 def get_Users():
     page = int(request.args.get('page', 1))
@@ -33,6 +34,7 @@ def get_Users():
 
 #INICIAR DETALLE ID
 @bp.route('/<id>', methods=['GET'])
+@jwt_required()
 @set_User
 def get_User(user):
     return response(user_schema.dump(user))
@@ -61,6 +63,7 @@ def create_User():
 
 #INICIAR ACTUALIZAR
 @bp.route('/<id>', methods=['PUT'])
+@jwt_required()
 @set_User
 def update_User(user):
     json = request.get_json(force=True)
