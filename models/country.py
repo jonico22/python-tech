@@ -7,7 +7,7 @@ class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True,unique=True)
     name = db.Column(db.String(), nullable=False,unique=True)
     code = db.Column(db.String(), nullable=False,unique=True)
-    created_at = db.Column(db.DateTime(), nullable=False,default=db.func.current_timestamp())
+    created_at = db.Column(db.DateTime(), nullable=True,default=db.func.current_timestamp())
     status =  db.Column(db.Boolean, nullable=False,default=1)
     event = db.relationship(
         "Event",
