@@ -1,18 +1,5 @@
 # NOMBRE DEL PROYECTO: PYTHON TECH
 
-## PRODUCCION
-
-Se configuro un servidor en aws ec2 con las limitaciones de la capa gratuita.
-
-La url del proyecto :
-
-http://18.234.130.162/
-
-La documentación se encuentra en la siguiente url :
-
-http://18.234.130.162/swagger-ui
-
-*este servidor es temporal hasta la evaluacion de la practica.
 
 ## DESARROLLADORES
 
